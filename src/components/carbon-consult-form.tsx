@@ -677,14 +677,26 @@ export function CarbonConsultForm({ consultationLabel }: { consultationLabel: st
                             comment: comment,
                         });
                         break;
-                    case 'Transport':
+                    case 'Transport': {
+                        let mode = methodName;
+                        let helicopterPayload;
+                        
+                        const isHelicopterPayload = helicopterPayloadOptions.some(h => h.name === methodName);
+                        
+                        if (isHelicopterPayload) {
+                            mode = 'Hélicoptère';
+                            helicopterPayload = methodName;
+                        }
+
                         newValues.transport.push({
-                            mode: methodName,
+                            mode: mode,
                             distance: quantity,
                             weight: Number(row[headerMap['Poids (tonnes)']]) || 0,
                             comment: comment,
+                            helicopterPayload: helicopterPayload,
                         });
                         break;
+                    }
                 }
             });
             form.reset(newValues);
