@@ -4,7 +4,6 @@ export const emissionFactors = {
     { name: "Acier", factor: 0, unit: "kg CO2e/kg" }, // Calcul dynamique
     { name: "Aluminium (Recyclé)", factor: 1.5, unit: "kg CO2e/kg" },
     { name: "Aluminium (Vierge)", factor: 11.0, unit: "kg CO2e/kg" },
-    { name: "Barre d'acier", factor: 2.21, unit: "kg CO2e/kg" },
     { name: "Béton", factor: 0, unit: "kg CO2e/m³" }, // Le calcul est maintenant dynamique
     { name: "Bois (Source durable)", factor: 0.05, unit: "kg CO2e/kg" },
     { name: "Canalisation PVC", factor: 2.47, unit: "kg CO2e/kg" },
