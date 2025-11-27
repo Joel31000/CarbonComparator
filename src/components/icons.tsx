@@ -34,7 +34,7 @@ export function Construction(props: SVGProps<SVGSVGElement>) {
     >
       <rect x="2" y="6" width="20" height="12" rx="2" />
       <path d="M10 12h4" />
-      <path d="M12 10v4" />
+      <path d_name="M12 10v4" />
       <path d="M2 10h.01" />
       <path d="M2 14h.01" />
       <path d="M22 10h-.01" />
