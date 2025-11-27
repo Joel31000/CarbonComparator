@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'CarbonImpact',
+  title: 'CarbonComparator',
   description: 'Une plateforme pour la comparaison d\'éco-conception de projets.',
 };
 

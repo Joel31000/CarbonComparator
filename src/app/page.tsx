@@ -76,7 +76,7 @@ export default function Home() {
         <div className="flex w-full items-center justify-between">
           <a href="#" className="flex items-center gap-2 text-lg font-semibold text-primary">
             <Logo className="h-7 w-7" />
-            <span className="font-headline text-2xl tracking-tight">CarbonImpact</span>
+            <span className="font-headline text-2xl tracking-tight">CarbonComparator</span>
           </a>
           <div className="flex items-center gap-2">
             <Button type="button" onClick={handleExportToPDF} variant="default" size="default" disabled={isExporting}>
@@ -91,11 +91,11 @@ export default function Home() {
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>À propos de CarbonImpact</DialogTitle>
+                  <DialogTitle>À propos de CarbonComparator</DialogTitle>
                 </DialogHeader>
                 <div className="grid gap-4 py-4 text-sm text-muted-foreground">
                   <p>
-                    CarbonImpact est une application mise à la disposition des fournisseurs pour calculer le bilan carbone de leurs offres lors des consultations et comparer des variantes.
+                    CarbonComparator est une application mise à la disposition des fournisseurs pour calculer le bilan carbone de leurs offres lors des consultations et comparer des variantes.
                   </p>
                   <p>
                     Le périmètre du calcul du bilan carbone prend en compte les postes : Matériaux, Fabrication, Energie, Transport et Mise en œuvre.
@@ -130,7 +130,7 @@ export default function Home() {
         </div>
       </main>
       <footer className="border-t border-border/40 bg-background/95 py-4 text-center text-sm text-muted-foreground print:hidden">
-        © {new Date().getFullYear()} CarbonImpact. Tous droits réservés.
+        © {new Date().getFullYear()} CarbonComparator. Tous droits réservés.
       </footer>
     </div>
   );
