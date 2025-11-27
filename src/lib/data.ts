@@ -1,10 +1,10 @@
 
 export const emissionFactors = {
   materials: [
-    { name: "Acier", factor: 0, unit: "kg CO2e/kg" }, // Calcul dynamique
+    { name: "Acier", factor: 0, unit: "kg CO2e/kg" },
     { name: "Aluminium (Recyclé)", factor: 1.5, unit: "kg CO2e/kg" },
     { name: "Aluminium (Vierge)", factor: 11.0, unit: "kg CO2e/kg" },
-    { name: "Béton", factor: 0, unit: "kg CO2e/m³" }, // Le calcul est maintenant dynamique
+    { name: "Béton", factor: 0, unit: "kg CO2e/m³" }, 
     { name: "Bois (Source durable)", factor: 0.05, unit: "kg CO2e/kg" },
     { name: "Canalisation PVC", factor: 2.47, unit: "kg CO2e/kg" },
     { name: "Cuivre Classique", factor: 4.50, unit: "kg CO2e/kg" },
@@ -12,7 +12,7 @@ export const emissionFactors = {
     { name: "Enrobé à chaud", factor: 0.05, unit: "kg CO2e/m²" },
     { name: "Enrobé à froid", factor: 0.02, unit: "kg CO2e/m²" },
     { name: "Papier/Carton", factor: 0.6, unit: "kg CO2e/kg" },
-    { name: "Peinture", factor: 0, unit: "kg CO2e/m²" }, // Calcul dynamique
+    { name: "Peinture", factor: 0, unit: "kg CO2e/m²" },
     { name: "Plastique (PET)", factor: 2.3, unit: "kg CO2e/kg" },
     { name: "Verre", factor: 0.9, unit: "kg CO2e/kg" },
   ].sort((a, b) => a.name.localeCompare(b.name)),
@@ -30,7 +30,6 @@ export const emissionFactors = {
     factor: v,
   })),
   concrete: [
-    // Facteurs d'émission pour 1 tonne de ciment. Unité: tCO2eq/t de ciment
     { name: "CEM I (ATILH)", factor: 0.752, unit: "tCO₂eq/t" },
     { name: "CEM II/A-LL ou LL (ATILH)", factor: 0.640, unit: "tCO₂eq/t" },
     { name: "CEM II/A-S A-M et A-V (ATILH)", factor: 0.619, unit: "tCO₂eq/t" },
@@ -43,22 +42,10 @@ export const emissionFactors = {
     { name: "CEM V/A (S-V) (ATILH)", factor: 0.479, unit: "tCO₂eq/t" },
     { name: "CEM VI (ECOCEM)", factor: 0.417, unit: "tCO₂eq/t" },
   ],
-  rebar: [
-    { name: "0.7 kgCO₂eq/kg", factor: 0.7 },
-    { name: "0.8 kgCO₂eq/kg", factor: 0.8 },
-    { name: "0.9 kgCO₂eq/kg", factor: 0.9 },
-    { name: "1.0 kgCO₂eq/kg", factor: 1.0 },
-    { name: "1.1 kgCO₂eq/kg", factor: 1.1 },
-    { name: "1.2 kgCO₂eq/kg (Classique)", factor: 1.2 },
-    { name: "1.3 kgCO₂eq/kg", factor: 1.3 },
-    { name: "1.4 kgCO₂eq/kg", factor: 1.4 },
-    { name: "1.5 kgCO₂eq/kg", factor: 1.5 },
-    { name: "1.6 kgCO₂eq/kg", factor: 1.6 },
-    { name: "1.7 kgCO₂eq/kg", factor: 1.7 },
-    { name: "1.8 kgCO₂eq/kg", factor: 1.8 },
-    { name: "1.9 kgCO₂eq/kg", factor: 1.9 },
-    { name: "2.0 kgCO₂eq/kg", factor: 2.0 },
-  ],
+  rebar: Array.from({ length: 14 }, (_, i) => 0.7 + i * 0.1).map(v => ({
+    name: `${v.toFixed(1)} kgCO₂eq/kg`,
+    factor: v,
+  })),
   manufacturing: [
     { name: "Impression 3D (Plastique)", factor: 0.01, unit: "kg CO2e/hr" },
     { name: "Peinture en fabrication", factor: 3.65, unit: "kg CO2e/kg" },
@@ -117,3 +104,15 @@ export const emissionFactors = {
     { name: "5335 Kg (type Airbus H225 (Super Puma))", factor: 1.05 },
   ],
 };
+
+// Export pre-sorted lists for easier use in components
+export const materialOptions = emissionFactors.materials.map((m) => m.name);
+export const steelOptions = emissionFactors.steelTypes.map((s) => s.name);
+export const paintOptions = emissionFactors.paint;
+export const concreteOptions = emissionFactors.concrete.map((c) => c.name);
+export const rebarOptions = emissionFactors.rebar;
+export const processOptions = emissionFactors.manufacturing.map((p) => p.name);
+export const energyOptions = emissionFactors.energy.map((e) => e.name);
+export const implementationOptions = emissionFactors.implementation.map((i) => i.name);
+export const transportOptions = emissionFactors.transport.map((t) => t.name);
+export const helicopterPayloadOptions = emissionFactors.helicopterPayloads;

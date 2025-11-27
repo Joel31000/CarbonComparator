@@ -24,7 +24,8 @@ export default function Home() {
 
   const handleExportToPDF = async () => {
     setIsExporting(true);
-    const input = document.getElementById('printable-area');
+    // We target the synthesis tab content for the PDF export
+    const input = document.getElementById('synthesis-content');
     if (input) {
       try {
         const canvas = await html2canvas(input, {
@@ -56,14 +57,14 @@ export default function Home() {
         const y = 0;
 
         pdf.addImage(imgData, 'PNG', x, y, newImgWidth, newImgHeight);
-        pdf.save('bilan-carbone.pdf');
+        pdf.save('synthese_carbone.pdf');
       } catch (error) {
         console.error("Erreur lors de la génération du PDF:", error);
       } finally {
         setIsExporting(false);
       }
     } else {
-      console.error("Element à exporter non trouvé");
+      console.error("Element à exporter non trouvé. Assurez-vous que l'onglet 'Synthèse' est visible.");
       setIsExporting(false);
     }
   };
@@ -80,7 +81,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <Button type="button" onClick={handleExportToPDF} variant="default" size="default" disabled={isExporting}>
               {isExporting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
-              Téléchargement en PDF
+              Télécharger la Synthèse (PDF)
             </Button>
             <Dialog>
               <DialogTrigger asChild>
@@ -94,19 +95,16 @@ export default function Home() {
                 </DialogHeader>
                 <div className="grid gap-4 py-4 text-sm text-muted-foreground">
                   <p>
-                    CarbonImpact est une application mise à la disposition des fournisseurs pour calculer le bilan carbone de leurs offres lors des consultations.
+                    CarbonImpact est une application mise à la disposition des fournisseurs pour calculer le bilan carbone de leurs offres lors des consultations et comparer des variantes.
                   </p>
                   <p>
                     Le périmètre du calcul du bilan carbone prend en compte les postes : Matériaux, Fabrication, Energie, Transport et Mise en œuvre.
                   </p>
                   <p>
-                    Le fournisseur implémente progressivement les différents postes qui vont s’additionner automatiquement. Le graphique du bilan carbone permet de visualiser les détails de la répartition de l’empreinte carbone par poste.
+                    La fonctionnalité de comparaison permet de mesurer l'écart entre une offre optimisée et une offre classique, en visualisant les gains en Teq CO2 et en pourcentage.
                   </p>
                   <p>
                     Le fournisseur peut éditer le bilan de l’empreinte carbone au format PDF et générer un fichier excel du bilan détaillé carbone. Ces documents doivent être joints aux autres documents constitutifs de son offre.
-                  </p>
-                  <p>
-                    Ces fichiers donnent tous les détails nécessaires au binôme technique, éventuellement associé à un ingénieur éco-conception pour vérifier et valider la cohérence du bilan carbone vis-à-vis du mode opératoire de l’offre technique.
                   </p>
                 </div>
               </DialogContent>
@@ -114,9 +112,9 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <main id="printable-area" className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="mx-auto grid w-full max-w-7xl gap-4">
-          <div className="grid w-full max-w-sm items-center gap-1.5 print:hidden">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="consultation-label">Libellé consultation</Label>
             <Input 
               id="consultation-label" 
@@ -126,9 +124,6 @@ export default function Home() {
               onChange={(e) => setConsultationLabel(e.target.value)}
             />
           </div>
-          <h1 className="font-headline text-2xl font-semibold print:hidden">
-            Données d'Entrée
-          </h1>
         </div>
         <div className="mx-auto grid w-full max-w-7xl items-start">
           <CarbonConsultForm consultationLabel={consultationLabel} />
