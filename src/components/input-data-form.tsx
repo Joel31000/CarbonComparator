@@ -12,7 +12,17 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
-import { emissionFactors, materialOptions, steelOptions, paintOptions, concreteOptions, rebarOptions, processOptions, energyOptions, implementationOptions, transportOptions, helicopterPayloadOptions } from "@/lib/data";
+import { 
+    emissionFactors,
+    // Full lists (for Optimized scenario)
+    materialOptions, steelOptions, paintOptions, concreteOptions, rebarOptions, 
+    processOptions, energyOptions, implementationOptions, transportOptions, 
+    helicopterPayloadOptions,
+    // Classic lists
+    classicMaterialOptions, classicSteelOptions, classicConcreteOptions, classicProcessOptions,
+    classicEnergyOptions, classicImplementationOptions, classicTransportOptions,
+    classicHelicopterPayloads
+} from "@/lib/data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 
@@ -41,7 +51,7 @@ const SectionForm = ({ scenario }: { scenario: Scenario }) => {
                 title="Fabrication"
                 description="Processus de fabrication."
                 icon={Factory}
-                options={processOptions}
+                options={scenario === 'classic' ? classicProcessOptions : processOptions}
             />
         </TabsContent>
          <TabsContent value="energy">
@@ -54,7 +64,7 @@ const SectionForm = ({ scenario }: { scenario: Scenario }) => {
                 title="Mise en œuvre"
                 description="Étapes de mise en œuvre sur le chantier."
                 icon={Construction}
-                options={implementationOptions}
+                options={scenario === 'classic' ? classicImplementationOptions : implementationOptions}
             />
         </TabsContent>
         <TabsContent value="transport">
@@ -73,6 +83,10 @@ const MaterialSection = ({ scenario }: { scenario: Scenario }) => {
         name: `${scenario}.rawMaterials`,
     });
     const watchedMaterials = useWatch({ control, name: `${scenario}.rawMaterials` });
+
+    const currentMaterialOptions = scenario === 'classic' ? classicMaterialOptions : materialOptions;
+    const currentSteelOptions = scenario === 'classic' ? classicSteelOptions : steelOptions;
+    const currentConcreteOptions = scenario === 'classic' ? classicConcreteOptions : concreteOptions;
 
     return (
         <SectionCard
@@ -116,7 +130,7 @@ const MaterialSection = ({ scenario }: { scenario: Scenario }) => {
                                             <FormLabel>Matériau</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                 <FormControl><SelectTrigger><SelectValue placeholder="Sélectionnez..." /></SelectTrigger></FormControl>
-                                                <SelectContent>{materialOptions.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
+                                                <SelectContent>{currentMaterialOptions.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
                                             </Select>
                                             <FormMessage />
                                         </FormItem>
@@ -145,7 +159,7 @@ const MaterialSection = ({ scenario }: { scenario: Scenario }) => {
                                         <FormLabel>Nuance d'acier</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl><SelectTrigger><SelectValue placeholder="Sélectionnez une nuance" /></SelectTrigger></FormControl>
-                                        <SelectContent>{steelOptions.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                                        <SelectContent>{currentSteelOptions.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
                                         </Select>
                                         <FormMessage />
                                     </FormItem>
@@ -183,7 +197,7 @@ const MaterialSection = ({ scenario }: { scenario: Scenario }) => {
                                         <FormLabel>Type béton bas carbone</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl><SelectTrigger><SelectValue placeholder="Sélectionnez un type" /></SelectTrigger></FormControl>
-                                        <SelectContent>{concreteOptions.map(c => <SelectItem key={c} value={c}>{`${c} (${emissionFactors.concrete.find(f => f.name === c)?.factor} kgCO₂/kg)`}</SelectItem>)}</SelectContent>
+                                        <SelectContent>{currentConcreteOptions.map(c => <SelectItem key={c} value={c}>{`${c} (${emissionFactors.concrete.find(f => f.name === c)?.factor} kgCO₂/kg)`}</SelectItem>)}</SelectContent>
                                         </Select>
                                         <FormMessage />
                                     </FormItem>
@@ -358,6 +372,8 @@ const EnergySection = ({ scenario }: { scenario: Scenario }) => {
     const { control } = useFormContext<FormValues>();
     const { fields, append, remove } = useFieldArray({ control, name: `${scenario}.energy`});
 
+    const currentEnergyOptions = scenario === 'classic' ? classicEnergyOptions : energyOptions;
+
     return (
         <SectionCard
             title="Énergie"
@@ -381,7 +397,7 @@ const EnergySection = ({ scenario }: { scenario: Scenario }) => {
                                         <FormLabel>Source d'énergie</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl><SelectTrigger><SelectValue placeholder="Sélectionnez..." /></SelectTrigger></FormControl>
-                                            <SelectContent>{energyOptions.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
+                                            <SelectContent>{currentEnergyOptions.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
                                         </Select>
                                         <FormMessage />
                                     </FormItem>
@@ -428,6 +444,9 @@ const TransportSection = ({ scenario }: { scenario: Scenario }) => {
     const { fields, append, remove } = useFieldArray({ control, name: `${scenario}.transport` });
     const watchedTransport = useWatch({ control, name: `${scenario}.transport`});
 
+    const currentTransportOptions = scenario === 'classic' ? classicTransportOptions : transportOptions;
+    const currentHelicopterOptions = scenario === 'classic' ? classicHelicopterPayloads : helicopterPayloadOptions;
+
     return (
         <SectionCard
             title="Transport"
@@ -453,7 +472,7 @@ const TransportSection = ({ scenario }: { scenario: Scenario }) => {
                                             <FormLabel>Mode</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                 <FormControl><SelectTrigger><SelectValue placeholder="Sélectionnez..." /></SelectTrigger></FormControl>
-                                                <SelectContent>{transportOptions.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                                                <SelectContent>{currentTransportOptions.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
                                             </Select>
                                             <FormMessage />
                                         </FormItem>
@@ -493,7 +512,7 @@ const TransportSection = ({ scenario }: { scenario: Scenario }) => {
                                         <FormLabel>Charge utile</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl><SelectTrigger><SelectValue placeholder="Sélectionnez..." /></SelectTrigger></FormControl>
-                                            <SelectContent>{helicopterPayloadOptions.map(h => <SelectItem key={h.name} value={h.name}>{h.name}</SelectItem>)}</SelectContent>
+                                            <SelectContent>{currentHelicopterOptions.map(h => <SelectItem key={h.name} value={h.name}>{h.name}</SelectItem>)}</SelectContent>
                                         </Select>
                                         <FormMessage />
                                     </FormItem>

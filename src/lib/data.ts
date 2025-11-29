@@ -105,7 +105,7 @@ export const emissionFactors = {
   ],
 };
 
-// Export pre-sorted lists for easier use in components
+// --- Full Options for "Optimized" Scenario ---
 export const materialOptions = emissionFactors.materials.map((m) => m.name);
 export const steelOptions = emissionFactors.steelTypes.map((s) => s.name);
 export const paintOptions = emissionFactors.paint;
@@ -116,3 +116,59 @@ export const energyOptions = emissionFactors.energy.map((e) => e.name);
 export const implementationOptions = emissionFactors.implementation.map((i) => i.name);
 export const transportOptions = emissionFactors.transport.map((t) => t.name);
 export const helicopterPayloadOptions = emissionFactors.helicopterPayloads;
+
+
+// --- Restricted Options for "Classic" Scenario ---
+const classicMaterialsWhitelist = [
+  "Acier", "Béton", "Canalisation PVC", "Cuivre Classique", 
+  "Enrobé à chaud", "Papier/Carton", "Peinture", "Plastique (PET)", "Verre"
+];
+export const classicMaterialOptions = emissionFactors.materials
+  .filter(m => classicMaterialsWhitelist.includes(m.name))
+  .map(m => m.name);
+
+export const classicSteelOptions = emissionFactors.steelTypes
+  .filter(s => s.name === "Acier filière haut fourneau (BOF)")
+  .map(s => s.name);
+
+export const classicConcreteOptions = emissionFactors.concrete
+  .filter(c => c.name === "CEM I (ATILH)")
+  .map(c => c.name);
+  
+const classicManufacturingWhitelist = [
+  "Impression 3D (Plastique)", "Peinture en fabrication", "Soudage en fabrication", "Usinage"
+];
+export const classicProcessOptions = emissionFactors.manufacturing
+  .filter(p => classicManufacturingWhitelist.includes(p.name))
+  .map(p => p.name);
+
+export const classicEnergyOptions = emissionFactors.energy
+  .filter(e => e.name === "Groupe électrogène gazole")
+  .map(e => e.name);
+  
+const classicImplementationWhitelist = [
+  "Bétonnière", "Foreuse (1500 W)", "Grue", "machines béton projeté compact (3,5-5,5 KW)",
+  "machines béton projeté haute capacité (>13 KW)", "machines béton projeté moyenne (7,5 KW)",
+  "Marteau piqueur pneumatique", "Pelle araignée", "Pelleuteuse", "Soudage", "Peinture industrielle"
+];
+export const classicImplementationOptions = emissionFactors.implementation
+  .filter(i => classicImplementationWhitelist.includes(i.name))
+  .map(i => i.name);
+
+const classicTransportWhitelist = [
+  "Avion (Cargo)", "Bateau (Cargo)", "Camion (>32t)", "Camion porteur 12 tonnes gasoil",
+  "Camion porteur 7,5 tonnes gasoil", "Véhicule utilitaire essence", "Véhicule utilitaire gasoil",
+  "Voiture essence", "Hélicoptère"
+];
+export const classicTransportOptions = emissionFactors.transport
+  .filter(t => classicTransportWhitelist.includes(t.name))
+  .map(t => t.name);
+
+const classicHelicopterWhitelist = [
+  "680 Kg (type Bell 206 JetRanger)",
+  "1160 Kg (type Airbus H125 (AS350 Écureuil))",
+  "1200 Kg (type Airbus H130 (EC130 T2))"
+];
+export const classicHelicopterPayloads = emissionFactors.helicopterPayloads
+  .filter(h => classicHelicopterWhitelist.includes(h.name));
+
