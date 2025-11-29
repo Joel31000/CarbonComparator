@@ -166,10 +166,12 @@ export function CarbonConsultForm({ consultationLabel }: { consultationLabel: st
             ws_data.push(totalRow);
 
             const ws = XLSX.utils.aoa_to_sheet(ws_data);
-            if(!ws['!cols']) ws['!cols'] = [];
+            ws['!cols'] = [];
             header.forEach((h, i) => {
                 const colWidth = Math.max(h.length, ...ws_data.map(row => (row[i] || '').toString().length)) + 2;
-                ws['!cols'][i] = { wch: colWidth };
+                if(ws['!cols']) {
+                  ws['!cols'][i] = { wch: colWidth };
+                }
             });
             return ws;
         };
