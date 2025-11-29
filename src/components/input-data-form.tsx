@@ -570,7 +570,7 @@ export function InputDataForm() {
       <div>
         <Card>
           <CardHeader>
-            <CardTitle>Offre Optimisée</CardTitle>
+            <CardTitle>Offre optimisée bas carbone</CardTitle>
             <CardDescription>
               Données pour le scénario optimisé.
             </CardDescription>
